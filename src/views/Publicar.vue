@@ -33,7 +33,9 @@
                 required
               ></v-text-field>
               <v-select
+              v-model="regiones.region"
                 :items="regiones"
+                item-text="region"
                 label="Región"
                 outlined
               ></v-select>
