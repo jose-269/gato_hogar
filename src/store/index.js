@@ -10,7 +10,6 @@ export default new Vuex.Store({
       {
         id: 0,
         nombre: "Almendra",
-        comuna: "La Florida",
         img: "",
         cantidad: 1,
         msje: "Hola me llamo Almendra, mi dueña falleció y necesito una familia que me adopt, me de amor cariño y mucha comida. prrr prrr Miau!! ",
@@ -18,7 +17,6 @@ export default new Vuex.Store({
       {
         id: 1,
         nombre: "Dientes",
-        comuna: "Ñuñoa",
         img: "",
         cantidad: 1,
         msje: "Me encontraron por el sector de avenida Macul y no encuentro mi familia hace meses, me quieres adoptar?? Miauu!!",
@@ -26,7 +24,6 @@ export default new Vuex.Store({
       {
         id: 2,
         nombre: "Recién nacido",
-        comuna: "San Miguel",
         img: "",
         cantidad: 1,
         msje: "Hola mis hermanos enconrtaron familia y yo aún estoy solito esperando prrr prrr!!",
@@ -34,7 +31,6 @@ export default new Vuex.Store({
       {
         id: 3,
         nombre: "3 Gatitos",
-        comuna: "Santiago centro",
         img: "",
         cantidad: 3,
         msje: "Somos 3 michis recién nacidos esperando el calor de un hogar Miau!!",
@@ -42,7 +38,6 @@ export default new Vuex.Store({
       {
         id: 4,
         nombre: "2 gatitos",
-        comuna: "Puente alto",
         img: "",
         cantidad: 2,
         msje: "Somos dos gatitos de 3 meses queremos mucho cariño y una familia.",
@@ -50,7 +45,6 @@ export default new Vuex.Store({
       {
         id: 5,
         nombre: "Lince",
-        comuna: "San Bernardo",
         img: "",
         cantidad: 1,
         msje: "Me encontraron en la Florida a punto de ser comido por un perro, ayúdamen necesito que me rescaten. prr prr.",
@@ -58,7 +52,6 @@ export default new Vuex.Store({
       {
         id: 6,
         nombre: "Rayo",
-        comuna: "San Joaquín",
         img: "",
         cantidad: 1,
         msje: "Hola estoy en la veterinaria San Martin de Vicuña Mackenna y busco un hogar",
@@ -66,7 +59,6 @@ export default new Vuex.Store({
       {
         id: 7,
         nombre: "Rony",
-        comuna: "La Florida",
         img: "",
         cantidad: 1,
         msje: "Hola estoy muy enojado, porque aún no me adoptan, queiro mimitos ahora ya!!!!",
@@ -74,7 +66,6 @@ export default new Vuex.Store({
       {
         id: 8,
         nombre: "Tao",
-        comuna: "Puente alto",
         img: "",
         cantidad: 1,
         msje: "Quien me quiere adoptar?? :(",
@@ -82,7 +73,6 @@ export default new Vuex.Store({
       {
         id: 9,
         nombre: "3 Gatitos",
-        comuna: "La Cisterna",
         img: "",
         cantidad: 3,
         msje: "Somos tres gatitos y queremos que nos adopten. Miauu!!",

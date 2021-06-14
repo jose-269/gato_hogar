@@ -92,9 +92,6 @@ export default {
     ...mapMutations(["agregarGatoState"]),
   },
   computed: {
-    regionesEnRegiones() {
-      return this.regiones.region
-    },
     ...mapState(["regiones"]),
   },
 };

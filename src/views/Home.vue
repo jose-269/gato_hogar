@@ -22,7 +22,7 @@
         </v-row>
       </v-container>
     </div>
-    <Anuncios :gatos="gatitos" />
+    <Anuncios :gatos="gatitos" :lugar="regiones" />
   </div>
 </template>
 
@@ -36,7 +36,7 @@ export default {
     Anuncios,
   },
   computed: {
-    ...mapState(["gatitos"]),
+    ...mapState(["gatitos", "regiones"]),
   },
 };
 </script>

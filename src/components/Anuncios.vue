@@ -43,7 +43,7 @@
                     >Cantidad: {{ gatito.cantidad }}</v-list-item-title
                   >
                   <v-list-item-title
-                    >Comuna: {{ gatito.comuna }}</v-list-item-title
+                    >Region: {{  }}</v-list-item-title
                   >
                 </v-list-item-content>
               </v-list-item>
@@ -74,6 +74,9 @@ export default {
     gatos: {
       type: Array,
     },
+    lugar: {
+      type: Array,
+    }
   },
 };
 </script>
