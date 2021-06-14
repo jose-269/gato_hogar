@@ -3,32 +3,23 @@
     <v-container class="pt-16">
       <v-row style="height: 100vh">
         <v-col class="my-auto px-16 mx-16">
-          <v-card class="m-auto">
-            <v-app-bar color="warning">
-              <v-card-title class="mx-auto">
-                <h4 class="white--text">Registrar</h4>
-              </v-card-title>
-            </v-app-bar>
-            <div class="mt-5 mx-16">
-              <v-text-field
-                v-model="nombre"
-                label="E-mail"
-                outlined
-                dense
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="numero"
-                label="Contraseña"
-                outlined
-                dense
-                required
-              ></v-text-field>
-              <div class="text-center pb-5">
-                <v-btn to="/" color="warning">Registrame</v-btn>
-              </div>
+          <v-alert class="my-auto">
+            <label>E-mail</label>
+            <v-text-field label="E-mail" outlined dense required></v-text-field>
+            <label>Contraseña</label>
+            <v-text-field
+              v-model="numero"
+              label="Contraseña"
+              outlined
+              dense
+              required
+            ></v-text-field>
+            <div class="text-center pb-5">
+              <v-btn to="/" color="warning"
+                >Registrarme</v-btn
+              >
             </div>
-          </v-card>
+          </v-alert>
         </v-col>
       </v-row>
     </v-container>

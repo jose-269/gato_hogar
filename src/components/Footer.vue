@@ -1,17 +1,21 @@
 <template>
-  <div class="grey lighten-3 py-6">
+  <div class="grey darken-4 py-6">
     <v-container>
       <v-row>
-        
         <v-col cols="12 ">
           <div class="">
-            <v-img class="logo mx-auto" src="@/assets/gathogar_logo.png"></v-img>
+            <v-img
+              class="logo mx-auto"
+              src="@/assets/gathogar_logo.png"
+            ></v-img>
           </div>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12">
-          <p class="text-center">Una página para gatos no para humanos</p>
+          <p class="text-center white--text">
+            Una página para gatos no para humanos ®
+          </p>
         </v-col>
       </v-row>
     </v-container>

@@ -1,51 +1,42 @@
 <template>
-  <div class="bg pt-16">
-    <v-container>
-      <v-row>
-        <v-col class="text-center my-auto " cols="6">
-          <h1 class="mb-7 white--text">Gathogar</h1>
-          <h3 class="mb-15 white--text">
-            Somos una compañía sin findes de lucro, y presentamos un espacio
-            donde puedes publicar tus gatitos para ser adoptados así tambien
-            para adoptar.
-          </h3>
-          <v-btn color="warning" to="publicar">Publicar</v-btn>
-        </v-col>
-        <v-col cols="6">
-          <v-img
-            class="cat"
-            src="../assets/hero_dos.png"
-            alt="hero-section img"
-          ></v-img>
-        </v-col>
-      </v-row>
-    </v-container>
+  <div>
+    <div class="bg pt-16">
+      <v-container>
+        <v-row>
+          <v-col class="text-center my-auto" md="6" lg="6">
+            <h1 class="mb-7 white--text">Gathogar</h1>
+            <h3 class="mb-15 white--text">
+              Presentamos un espacio
+              donde puedes publicar tus gatitos para ser adoptados así tambien como
+              para adoptar.
+            </h3>
+            <v-btn color="warning" to="publicar">Publicar</v-btn>
+          </v-col>
+          <v-col md="6" lg="6">
+            <v-img
+              class="cat"
+              src="../assets/hero_dos.png"
+              alt="hero-section img"
+            ></v-img>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
+    <Anuncios :gatos="gatitos" />
   </div>
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
+import Anuncios from "@/components/Anuncios.vue";
+import { mapState } from "vuex";
 export default {
   name: "Home",
-  data() {
-    return {
-      gatos: [],
-    };
+  components: {
+    Anuncios,
   },
-  methods: {
-    async getData() {
-      const url = "https://cataas.com/cat";
-      try {
-        let gatos = await axios(url);
-        // gatos = this.gatos;
-        console.log(gatos);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  },
-  created() {
-    this.getData();
+  computed: {
+    ...mapState(["gatitos"]),
   },
 };
 </script>

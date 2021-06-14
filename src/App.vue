@@ -8,7 +8,8 @@
 
 <script>
 import Nav from "@/components/Nav.vue";
-import Footer from "@/components/Footer.vue"
+import Footer from "@/components/Footer.vue";
+import {mapActions} from "vuex"
 export default {
   name: "App",
   components: {
@@ -18,5 +19,11 @@ export default {
   data: () => ({
     //
   }),
+  methods: {
+    ...mapActions(["getData"]),
+  },
+  created () {
+    this.getData();
+  },
 };
 </script>
