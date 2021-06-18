@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-
+import firebase from "firebase";
+// .replace("+", "")
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -78,7 +79,19 @@ export default new Vuex.Store({
         msje: "Somos tres gatitos y queremos que nos adopten. Miauu!!",
       },
     ],
-    regiones: []
+    regiones: [],
+    regUsuario: {
+      nombre: "",
+      celular: "",
+      email: "",
+      contraseña: "",
+      validaPass: "",
+    },
+    nuevoUsuario: [],
+    registro: {
+      email: "",
+      contraseña: ""
+    }
   },
   mutations: {
     agregarGatoState(state, payload) {
@@ -86,28 +99,65 @@ export default new Vuex.Store({
       const nuevoGatitoState = payload;
       gatitosState.push(nuevoGatitoState);
     },
-    cargarRegiones(state,payload) {
+    cargarRegiones(state, payload) {
       const carga = payload;
-      if(!carga) return;
-      state.regiones = payload
+      if (!carga) return;
+      state.regiones = payload;
+    },
+    agregarStateUsuario(state, payload) {
+      const usuario = state.nuevoUsuario;
+      usuario.push(payload);
     }
   },
   actions: {
-    async getData({commit}) {
-      const url = "https://us-central1-apis-varias-mias.cloudfunctions.net/regiones_comunas";
+    //Regiones
+    async getData({ commit }) {
+      const url =
+        "https://us-central1-apis-varias-mias.cloudfunctions.net/regiones_comunas";
       try {
         const req = await axios(url);
         const data = req.data;
-        const filtrados = data.map(obj => {
-          return {
-            id: obj.id_region,
-            region: obj.region
-          }
-        }).filter((item,i,regiones) => regiones.findIndex(el => el.id === item.id) === i);
+        const filtrados = data
+          .map((obj) => {
+            return {
+              id: obj.id_region,
+              region: obj.region,
+            };
+          })
+          .filter(
+            (item, i, regiones) =>
+              regiones.findIndex((el) => el.id === item.id) === i
+          );
         commit("cargarRegiones", filtrados);
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    //Registrar usuario
+    async nuevoUsuario({commit},payload) {
+      const db = firebase.firestore()
+      if(!payload) return;
+      const nombre = payload.nombre;
+      const celular = payload.celular
+      const email = payload.email;
+      const contraseña = payload.contraseña;
+      commit("agregarStateUsuario", payload);
+      try {
+        const reqUsers = await db.collection("usuarios").get();
+        const finder = reqUsers.docs.find(el => el.email === email);
+        if(!finder) {
+          await firebase.auth().createUserWithEmailAndPassword(email, contraseña);
+          await db.collection("usuarios").add({
+            nombre,
+            celular,
+            email,
+          })
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    //Crear Gatito
+
   },
 });

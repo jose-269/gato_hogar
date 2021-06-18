@@ -56,14 +56,7 @@
             <div class="text-center pb-5">
               <v-btn
                 @click="
-                  agregarGatoState({
-                    nombre: publicacion.nombre,
-                    cantidad: publicacion.cantidad,
-                    telefono: publicacion.telefono,
-                    img: publicacion.img,
-                    comuna: publicacion.comuna,
-                    msje: publicacion.mensaje,
-                  })
+                  agregarGatoState
                 "
                 >Publicar</v-btn
               >
@@ -76,7 +69,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -89,7 +82,11 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["agregarGatoState"]),
+    // ...mapMutations(["agregarGatoState"]),
+    agregarGatoState() {
+      const local = localStorage.getItem("login");
+      console.log(local);
+    }
   },
   computed: {
     ...mapState(["regiones"]),

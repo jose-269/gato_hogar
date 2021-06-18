@@ -6,17 +6,26 @@
           <!-- <div class="bg-login "> -->
           <v-alert class="my-auto">
             <label>E-mail</label>
-            <v-text-field label="E-mail" outlined dense required></v-text-field>
+            <v-text-field
+              v-model="registro.email"
+              label="E-mail"
+              outlined
+              dense
+              required
+            ></v-text-field>
             <label>Contraseña</label>
             <v-text-field
-              v-model="numero"
+              v-model="registro.contraseña"
               label="Contraseña"
+              type="password"
               outlined
               dense
               required
             ></v-text-field>
             <div class="text-center pb-5">
-              <v-btn to="/" color="success" class="mx-5 mb-2">Ingresar</v-btn>
+              <v-btn @click="login" color="success" class="mx-5 mb-2"
+                >Ingresar</v-btn
+              >
               <v-btn to="/registrar" color="warning" class="mb-2"
                 >Registrarse</v-btn
               >
@@ -29,7 +38,34 @@
 </template>
 
 <script>
-export default {};
+import firebase from "firebase";
+import { mapState } from 'vuex';
+export default {
+  
+  computed: {
+    ...mapState(["registro"])
+  },
+  methods: {
+    async login() {
+      if (!this.registro && !this.registro.email && !this.registro.contraseña) return;
+      try {
+        const req = await firebase
+          .auth()
+          .signInWithEmailAndPassword(this.registro.email, this.registro.contraseña);
+        console.log(req);
+        if (req && req !== null) {
+          localStorage.setItem("login", this.registro.email);
+          this.$router.push("/");
+        }
+      } catch (error) {
+        const errorCode = error.code;
+        const errorMsje = error.message;
+        console.log("Codigo de error:", errorCode);
+        console.log("Mensaje de error", errorMsje);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
