@@ -48,13 +48,26 @@ export default {
   methods: {
     async login() {
       if (!this.registro && !this.registro.email && !this.registro.contraseña) return;
+      
       try {
+        const db = firebase.firestore()
+        const reqDBUser = await db.collection("usuarios").get();
+        //  reqDBUser.docs.forEach(el => {
+        //    console.log(el.data().email);
+           
+        //  })
+         const finder = reqDBUser.docs.find(el => this.registro.email === el.data().email);
+         console.log(finder.data().email);
+        // const usuario = reqDBUser.find(el => el.email === this.registro.email);
+        // console.log(reqDBUser);
+        // console.log(usuario);
         const req = await firebase
           .auth()
           .signInWithEmailAndPassword(this.registro.email, this.registro.contraseña);
         console.log(req);
+
         if (req && req !== null) {
-          localStorage.setItem("login", this.registro.email);
+          localStorage.setItem("login","logueado");
           this.$router.push("/");
         }
       } catch (error) {

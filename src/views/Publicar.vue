@@ -11,14 +11,14 @@
             </v-app-bar>
             <div class="mt-5 mx-16">
               <v-text-field
-                v-model="publicacion.nombre"
+                v-model="gatos.nombre"
                 label="Nombre"
                 outlined
                 dense
                 required
               ></v-text-field>
               <v-text-field
-                v-model="publicacion.cantidad"
+                v-model="gatos.cantidad"
                 type="number"
                 label="cantidad de gatos"
                 outlined
@@ -26,14 +26,14 @@
                 required
               ></v-text-field>
               <v-text-field
-                v-model="publicacion.telefono"
+                v-model="gatos.telefono"
                 label="Teléfono"
                 outlined
                 dense
                 required
               ></v-text-field>
               <v-select
-              v-model="regiones.region"
+                v-model="gatos.region"
                 :items="regiones"
                 item-text="region"
                 label="Región"
@@ -47,19 +47,14 @@
                 required
               ></v-file-input>
               <v-textarea
-                v-model="publicacion.mensaje"
+                v-model="gatos.msje"
                 label="mensaje"
                 outlined
                 dense
               ></v-textarea>
             </div>
             <div class="text-center pb-5">
-              <v-btn
-                @click="
-                  agregarGatoState
-                "
-                >Publicar</v-btn
-              >
+              <v-btn @click="publicar(gatos)">Publicar</v-btn>
             </div>
           </v-card>
         </v-col>
@@ -69,27 +64,47 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
-  data() {
-    return {
-      publicacion: {
-        nombre: "",
-        numero: "",
-        telefono: "",
-        mensaje: "",
-      },
-    };
-  },
   methods: {
-    // ...mapMutations(["agregarGatoState"]),
-    agregarGatoState() {
-      const local = localStorage.getItem("login");
-      console.log(local);
-    }
+    ...mapActions(["agregarGato"]),
+    publicar(obj) {
+      const regexTel = /^\x2b569[0-9]{8}$/i;
+      if (
+        !this.gatos.nombre &&
+        !this.gatos.cantidad &&
+        !this.gatos.telefono &&
+        !this.gatos.region &&
+        !this.gatos.msje
+      )
+        return;
+      else if (this.gatos.cantidad < 1 && this.gatos.cantidad < 10) return;
+      else if (!regexTel.test(this.gatos.telefono)) return;
+      else if (this.gatos.msje.length > 200) return;
+      else {
+        const nuevoGato = {
+          nombre: obj.nombre,
+          cantidad: obj.cantidad,
+          telefono: obj.telefono.replace("+", ""),
+          region: obj.region,
+          mensaje: obj.msje
+        }
+        this.agregarGato(nuevoGato);
+      this.$router.push("/");
+        } 
+      // this.limpiar();
+    },
+    // limpiar() {
+    //   this.gatos.nombre = "";
+    //   this.gatos.cantidad = "";
+    //   this.gatos.telefono = "";
+    //   this.gatos.region = "";
+    //   this.gatos.msje = "";
+    //   this.gatos.autor = "";
+    // },
   },
   computed: {
-    ...mapState(["regiones"]),
+    ...mapState(["regiones", "gatos"]),
   },
 };
 </script>

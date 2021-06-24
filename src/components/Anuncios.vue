@@ -4,11 +4,12 @@
       <v-row>
         <v-col
           xs="12"
+          sm="6"
           md="4"
           lg="3"
           xl="3"
-          v-for="gatito in gatos"
-          :key="gatito.id"
+          v-for="(gatito,i) in gatosDB"
+          :key="i"
         >
           <v-card height="100%">
             <v-card-title
@@ -43,12 +44,12 @@
                     >Cantidad: {{ gatito.cantidad }}</v-list-item-title
                   >
                   <v-list-item-title
-                    >Region: {{  }}</v-list-item-title
+                    >Region: {{ gatito.region }}</v-list-item-title
                   >
                 </v-list-item-content>
               </v-list-item>
               <v-card-text class="pt-0">
-                {{ gatito.msje }}
+                {{ gatito.mensaje }}
               </v-card-text>
               <v-card-actions>
                 <v-btn
@@ -75,6 +76,9 @@ export default {
       type: Array,
     },
     lugar: {
+      type: Array,
+    },
+    gatosDB: {
       type: Array,
     }
   },

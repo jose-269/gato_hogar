@@ -20,10 +20,12 @@ export default {
     //
   }),
   methods: {
-    ...mapActions(["getData"]),
+    ...mapActions(["getData","getGatitosDB"]),
   },
+  
   created () {
     this.getData();
+    this.getGatitosDB();
   },
 };
 </script>

@@ -6,6 +6,7 @@
     <v-toolbar-title class="font-italic">Gathogar</v-toolbar-title>
     <v-spacer></v-spacer>
     <div class="hidden-sm-and-down">
+      <v-btn text to="/misPublicaciones">Mis publicaciones</v-btn>
       <v-btn text to="/publicar">Publicar</v-btn>
       <v-btn to="/login" elevation="2" outlined color="success" class="mx-5"
         >Ingresar</v-btn
@@ -19,6 +20,9 @@
         </v-btn>
       </template>
       <v-list class="mt-8 text-center">
+        <v-list-item-title
+          ><v-btn to="/misPublicaciones">Mis publicaciones</v-btn></v-list-item-title
+        >
         <v-list-item-title
           ><v-btn to="/publicar">Publicar</v-btn></v-list-item-title
         >

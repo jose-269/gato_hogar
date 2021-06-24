@@ -13,13 +13,14 @@ firebase.initializeApp(firebaseConfig);
 
 // gonzafg2@gmail.com
 
+
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("login");
   if (
     to.name !== "Home" &&
     to.name !== "Login" &&
     to.name !== "Registrar" &&
-    isAuthenticated !== store.state.registro.email
+    isAuthenticated !== "logueado"
   )
     next({ name: "Login" });
   next();
