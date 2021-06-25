@@ -144,6 +144,18 @@ export default new Vuex.Store({
     setMovil(state, payload) {
       if(!payload) return;
       state.movil = payload;
+    },
+    getTabla(state, payload) {
+      const telefono = payload;
+      if(!telefono) return;
+      state.gatitosDB.forEach(el => {
+        if(el.telefono === telefono) {
+          state.mostrarTabla.nombre = el.nombre;
+          state.mostrarTabla.cantidad = el.cantidad;
+          state.mostrarTabla.mensaje = el.mensaje;
+          state.mostrarTabla.id = el.id
+        }
+      })
     }
   },
   actions: {
@@ -235,26 +247,26 @@ export default new Vuex.Store({
 
 
 
-    async getTabla({commit}, payload) {
-      const db = firebase.firestore();
-      const telefono = payload;
-      if (!telefono) return;
-      try {
-        const req = await db.collection("gatitosDB").get();
-        req.docs.forEach((el) => {
-          if (el.data().telefono === telefono) {
-            const obj = {
-              nombre: el.data().nombre,
-              cantidad: el.data().cantidad,
-              mensaje: el.data().mensaje,
-              id: el.id,
-            };
-            commit("agregarTabla", obj);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // async getTabla( {commit}, payload) {
+    //   const db = firebase.firestore();
+    //   const telefono = payload;
+    //   if (!telefono) return;
+    //   try {
+    //     const req = await db.collection("gatitosDB").get();
+    //     req.docs.forEach((el) => {
+    //       if (el.data().telefono === telefono) {
+    //         const obj = {
+    //           nombre: el.data().nombre,
+    //           cantidad: el.data().cantidad,
+    //           mensaje: el.data().mensaje,
+    //           id: el.id,
+    //         };
+    //         commit("agregarTabla", obj);
+    //       }
+    //     });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
   },
 });

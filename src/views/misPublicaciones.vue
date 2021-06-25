@@ -57,7 +57,7 @@
               <v-textarea v-model="mostrarTabla.mensaje" label="mensaje" outlined dense></v-textarea>
             </div>
             <div class="text-center pb-5">
-              <v-btn @click="modificar(mostrarTabla.id)" color="success" class="mx-5">Modificar</v-btn>
+              <v-btn @click="modificar(mostrarTabla)" color="success" class="mx-5">Modificar</v-btn>
               <v-btn color="error">Eliminar publicación</v-btn>
             </div>
           </v-card>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   data() {
@@ -77,10 +77,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getTabla", "update"]),
-    ...mapMutations(["setMovil"]),
-    modificar(id){
-      this.update(id);
+    // ...mapActions([ "update"]),
+    ...mapMutations(["setMovil", "getTabla"]),
+    modificar(obj){
+      console.log(obj);
     },
     traerEdicion(celu) {
       const regexTel = /^\x2b569[0-9]{8}$/i;
@@ -89,13 +89,12 @@ export default {
       else {
           const telefono = celu.replace("+", "");
           this.getTabla(telefono);
-          this.setMovil(this.numero)
+          this.setMovil(telefono)
       }
     },
   },
   computed: {
-      ...mapState(["mostrarTabla", ]),
-      // ...mapGetters(["getPayload"])
+      ...mapState(["mostrarTabla"]),
   },
 };
 </script>
