@@ -103,14 +103,20 @@ export default new Vuex.Store({
       email: "",
       contraseña: "",
     },
-    editar: false,
+    // editar: false,
     mostrarTabla: {
       nombre: "",
       cantidad: "",
       mensaje: "",
       id: "",
     },
+    movil: ""
   },
+  // getters: {
+  //   getPayload(payload) {
+  //     console.log(payload);
+  //   }
+  // },
   mutations: {
     cargarGatitosDB(state, payload) {
       const carga = payload;
@@ -135,6 +141,10 @@ export default new Vuex.Store({
       const carga = payload;
       state.mostrarTabla = carga;
     },
+    setMovil(state, payload) {
+      if(!payload) return;
+      state.movil = payload;
+    }
   },
   actions: {
     //Regiones
@@ -222,7 +232,10 @@ export default new Vuex.Store({
       }
     },
     //getUpdateData
-    async getTabla({ commit }, payload) {
+
+
+
+    async getTabla({commit}, payload) {
       const db = firebase.firestore();
       const telefono = payload;
       if (!telefono) return;

@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
   data() {
@@ -78,6 +78,7 @@ export default {
   },
   methods: {
     ...mapActions(["getTabla", "update"]),
+    ...mapMutations(["setMovil"]),
     modificar(id){
       this.update(id);
     },
@@ -88,11 +89,13 @@ export default {
       else {
           const telefono = celu.replace("+", "");
           this.getTabla(telefono);
+          this.setMovil(this.numero)
       }
     },
   },
   computed: {
-      ...mapState(["mostrarTabla",]),
+      ...mapState(["mostrarTabla", ]),
+      // ...mapGetters(["getPayload"])
   },
 };
 </script>
