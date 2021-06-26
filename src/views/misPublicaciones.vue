@@ -33,14 +33,14 @@
 
             <div class="mt-5 mx-16">
               <v-text-field
-              v-model="mostrarTabla.nombre"
+                v-model="mostrarTabla.nombre"
                 label="Nombre"
                 outlined
                 dense
                 required
               ></v-text-field>
               <v-text-field
-              v-model="mostrarTabla.cantidad"
+                v-model="mostrarTabla.cantidad"
                 type="number"
                 label="cantidad de gatos"
                 outlined
@@ -54,11 +54,23 @@
                 dense
                 required
               ></v-file-input>
-              <v-textarea v-model="mostrarTabla.mensaje" label="mensaje" outlined dense></v-textarea>
+              <v-textarea
+                v-model="mostrarTabla.mensaje"
+                label="mensaje"
+                outlined
+                dense
+              ></v-textarea>
             </div>
             <div class="text-center pb-5">
-              <v-btn @click="modificar(mostrarTabla)" color="success" class="mx-5">Modificar</v-btn>
-              <v-btn color="error">Eliminar publicación</v-btn>
+              <v-btn
+                @click="modificar(mostrarTabla)"
+                color="success"
+                class="mx-5"
+                >Modificar</v-btn
+              >
+              <v-btn @click="eliminar(mostrarTabla)" color="error"
+                >Eliminar publicación</v-btn
+              >
             </div>
           </v-card>
         </v-col>
@@ -69,7 +81,6 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-
 export default {
   data() {
     return {
@@ -77,24 +88,27 @@ export default {
     };
   },
   methods: {
-    ...mapActions([ "updateDB"]),
+    ...mapActions(["updateDB", "deleteDB"]),
     ...mapMutations(["setMovil", "getTabla"]),
-    modificar(obj){
+    modificar(obj) {
       this.updateDB(obj);
     },
     traerEdicion(celu) {
       const regexTel = /^\x2b569[0-9]{8}$/i;
-      if (!celu) alert("Ingrese un número válido");
+      if (!celu) alert("Ingrese un número de teléfono");
       else if (!regexTel.test(celu)) alert("Ingrese un número válido");
       else {
-          const telefono = celu.replace("+", "");
-          this.getTabla(telefono);
-          this.setMovil(telefono)
+        const telefono = celu.replace("+", "");
+        this.getTabla(telefono);
+        this.setMovil(telefono);
       }
+    },
+    eliminar(obj) {
+      this.deleteDB(obj);
     },
   },
   computed: {
-      ...mapState(["mostrarTabla"]),
+    ...mapState(["mostrarTabla"]),
   },
 };
 </script>

@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import firebase from "firebase";
-// .replace("+", "")
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -150,15 +150,22 @@ export default new Vuex.Store({
     },
     updateState(state, payload) {
       const updateGato = payload;
-      if(!updateGato) return;
-      state.gatitosDB.forEach(el => {
-        if(el.id === updateGato.id) {
+      if (!updateGato) return;
+      state.gatitosDB.forEach((el) => {
+        if (el.id === updateGato.id) {
           el.nombre = updateGato.nombre;
           el.cantidad = updateGato.cantidad;
           el.mensaje = updateGato.mensaje;
         }
-      })
+      });
     },
+    deleteState(state, payload) {
+      const deleteGato = payload;
+      const gatos = state.gatitosDB;
+      if(!deleteGato) return;
+      const i = gatos.indexOf(deleteGato);
+      gatos.splice(i, 1);
+    }
   },
   actions: {
     //Regiones
@@ -249,23 +256,32 @@ export default new Vuex.Store({
     async updateDB({ commit }, payload) {
       const db = firebase.firestore();
       const obj = payload;
-      if(!obj) return;
+      if (!obj) return;
       const id = obj.id;
       commit("updateState", obj);
       try {
         const req = await db.collection("gatitosDB").doc(id).update({
           nombre: obj.nombre,
           cantidad: obj.cantidad,
-          mensaje: obj.mensaje
-        })
-        if(!req) return;
+          mensaje: obj.mensaje,
+        });
+        if (!req) return;
       } catch (error) {
         console.log(error);
       }
     },
     //Delete
-    // async deleteDB({commit}, payload) {
-
-    // }
+    async deleteDB({commit}, payload) {
+      const db = firebase.firestore();
+      const deleteGato = payload;
+      if(!deleteGato) return;
+      const id = deleteGato.id;
+      commit("deleteState", deleteGato);
+      try {
+        await db.collection("gatitosDB").doc(id).delete()
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
 });
