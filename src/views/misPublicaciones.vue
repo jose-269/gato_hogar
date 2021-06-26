@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   data() {
@@ -77,10 +77,10 @@ export default {
     };
   },
   methods: {
-    // ...mapActions([ "update"]),
+    ...mapActions([ "updateDB"]),
     ...mapMutations(["setMovil", "getTabla"]),
     modificar(obj){
-      console.log(obj);
+      this.updateDB(obj);
     },
     traerEdicion(celu) {
       const regexTel = /^\x2b569[0-9]{8}$/i;

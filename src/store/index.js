@@ -110,13 +110,8 @@ export default new Vuex.Store({
       mensaje: "",
       id: "",
     },
-    movil: ""
+    movil: "",
   },
-  // getters: {
-  //   getPayload(payload) {
-  //     console.log(payload);
-  //   }
-  // },
   mutations: {
     cargarGatitosDB(state, payload) {
       const carga = payload;
@@ -137,26 +132,33 @@ export default new Vuex.Store({
       const usuario = state.nuevoUsuario;
       usuario.push(payload);
     },
-    agregarTabla(state, payload) {
-      const carga = payload;
-      state.mostrarTabla = carga;
-    },
     setMovil(state, payload) {
-      if(!payload) return;
+      if (!payload) return;
       state.movil = payload;
     },
     getTabla(state, payload) {
       const telefono = payload;
-      if(!telefono) return;
-      state.gatitosDB.forEach(el => {
-        if(el.telefono === telefono) {
+      if (!telefono) return;
+      state.gatitosDB.forEach((el) => {
+        if (el.telefono === telefono) {
           state.mostrarTabla.nombre = el.nombre;
           state.mostrarTabla.cantidad = el.cantidad;
           state.mostrarTabla.mensaje = el.mensaje;
-          state.mostrarTabla.id = el.id
+          state.mostrarTabla.id = el.id;
+        }
+      });
+    },
+    updateState(state, payload) {
+      const updateGato = payload;
+      if(!updateGato) return;
+      state.gatitosDB.forEach(el => {
+        if(el.id === updateGato.id) {
+          el.nombre = updateGato.nombre;
+          el.cantidad = updateGato.cantidad;
+          el.mensaje = updateGato.mensaje;
         }
       })
-    }
+    },
   },
   actions: {
     //Regiones
@@ -243,30 +245,27 @@ export default new Vuex.Store({
         console.log(error);
       }
     },
-    //getUpdateData
+    //update
+    async updateDB({ commit }, payload) {
+      const db = firebase.firestore();
+      const obj = payload;
+      if(!obj) return;
+      const id = obj.id;
+      commit("updateState", obj);
+      try {
+        const req = await db.collection("gatitosDB").doc(id).update({
+          nombre: obj.nombre,
+          cantidad: obj.cantidad,
+          mensaje: obj.mensaje
+        })
+        if(!req) return;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    //Delete
+    // async deleteDB({commit}, payload) {
 
-
-
-    // async getTabla( {commit}, payload) {
-    //   const db = firebase.firestore();
-    //   const telefono = payload;
-    //   if (!telefono) return;
-    //   try {
-    //     const req = await db.collection("gatitosDB").get();
-    //     req.docs.forEach((el) => {
-    //       if (el.data().telefono === telefono) {
-    //         const obj = {
-    //           nombre: el.data().nombre,
-    //           cantidad: el.data().cantidad,
-    //           mensaje: el.data().mensaje,
-    //           id: el.id,
-    //         };
-    //         commit("agregarTabla", obj);
-    //       }
-    //     });
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    // }
   },
 });
