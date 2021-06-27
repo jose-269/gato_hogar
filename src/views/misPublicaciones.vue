@@ -110,7 +110,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["mostrarTabla", "gatitosDB"]),
+    ...mapState(["mostrarTabla"]),
   },
   
 };

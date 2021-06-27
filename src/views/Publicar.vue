@@ -11,14 +11,14 @@
             </v-app-bar>
             <div class="mt-5 mx-16">
               <v-text-field
-                v-model="gatos.nombre"
+                v-model="form.nombre"
                 label="Nombre"
                 outlined
                 dense
                 required
               ></v-text-field>
               <v-text-field
-                v-model="gatos.cantidad"
+                v-model="form.cantidad"
                 type="number"
                 label="cantidad de gatos"
                 outlined
@@ -26,14 +26,14 @@
                 required
               ></v-text-field>
               <v-text-field
-                v-model="gatos.telefono"
+                v-model="form.telefono"
                 label="Teléfono"
                 outlined
                 dense
                 required
               ></v-text-field>
               <v-select
-                v-model="gatos.region"
+                v-model="form.region"
                 :items="regiones"
                 item-text="region"
                 label="Región"
@@ -47,14 +47,14 @@
                 required
               ></v-file-input>
               <v-textarea
-                v-model="gatos.msje"
+                v-model="form.mensaje"
                 label="mensaje"
                 outlined
                 dense
               ></v-textarea>
             </div>
             <div class="text-center pb-5">
-              <v-btn @click="publicar(gatos)">Publicar</v-btn>
+              <v-btn @click="publicar(form)">Publicar</v-btn>
             </div>
           </v-card>
         </v-col>
@@ -67,45 +67,60 @@
 import { mapState, mapActions } from "vuex";
 export default {
   name: "Publicar",
+  data() {
+    return {
+      form: {
+        nombre: "",
+        cantidad: "",
+        telefono: "",
+        region: "",
+        mensaje: "",
+      },
+    };
+  },
   methods: {
     ...mapActions(["agregarGato"]),
     publicar(obj) {
       const regexTel = /^\x2b569[0-9]{8}$/i;
-      if (
-        !this.gatos.nombre &&
-        !this.gatos.cantidad &&
-        !this.gatos.telefono &&
-        !this.gatos.region &&
-        !this.gatos.msje
+      if (this.form.nombre.length === 0) alert("Debe ingresar un nombre");
+      else if (this.form.cantidad < 1 && this.form.cantidad < 10)
+        alert("Debe ingresar una cantidad entre 1 y 10");
+      else if (!regexTel.test(this.form.telefono))
+        alert("Ingrese un número de teléfono valido");
+      else if (this.form.mensaje.length > 200 || this.form.mensaje < 1)
+        alert("Su mensaje no debe tener entre 0 y 200 carácteres");
+      else if (!this.form.region) alert("Ingrese su ubicación");
+      else if (
+        !this.form.nombre &&
+        !this.form.cantidad &&
+        !this.form.telefono &&
+        !this.form.region &&
+        !this.form.mensaje
       )
         return;
-      else if (this.gatos.cantidad < 1 && this.gatos.cantidad < 10) return;
-      else if (!regexTel.test(this.gatos.telefono)) return;
-      else if (this.gatos.msje.length > 200) return;
       else {
         const nuevoGato = {
           nombre: obj.nombre,
           cantidad: obj.cantidad,
           telefono: obj.telefono.replace("+", ""),
           region: obj.region,
-          mensaje: obj.msje
-        }
+          mensaje: obj.mensaje,
+        };
         this.agregarGato(nuevoGato);
-        } 
-      this.$router.push("/");
-      // this.limpiar();
+        this.$router.push("/");
+        this.limpiar();
+      }
     },
-    // limpiar() {
-    //   this.gatos.nombre = "";
-    //   this.gatos.cantidad = "";
-    //   this.gatos.telefono = "";
-    //   this.gatos.region = "";
-    //   this.gatos.msje = "";
-    //   this.gatos.autor = "";
-    // },
+    limpiar() {
+      this.form.nombre = "";
+      this.form.cantidad = "";
+      this.form.telefono = "";
+      this.form.region = "";
+      this.form.mensaje = "";
+    },
   },
   computed: {
-    ...mapState(["regiones", "gatos"]),
+    ...mapState(["regiones"]),
   },
 };
 </script>
