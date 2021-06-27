@@ -67,10 +67,9 @@
 </template>
 
 <script>
-// import axios from "axios";
 
 export default {
-  name: "Home",
+  name: "Anuncios",
   props: {
     gatos: {
       type: Array,

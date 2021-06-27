@@ -4,15 +4,14 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import firebase from "firebase";
-import { firebaseConfig } from "../firebase";
+
+// import { firebaseConfig } from "../firebase";
 
 Vue.config.productionTip = false;
 
-firebase.initializeApp(firebaseConfig);
-
+// firebase.initializeApp(firebaseConfig);
 
 // gonzafg2@gmail.com
-
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("login");

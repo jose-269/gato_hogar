@@ -66,6 +66,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
+  name: "Publicar",
   methods: {
     ...mapActions(["agregarGato"]),
     publicar(obj) {
@@ -90,8 +91,8 @@ export default {
           mensaje: obj.msje
         }
         this.agregarGato(nuevoGato);
-      this.$router.push("/");
         } 
+      this.$router.push("/");
       // this.limpiar();
     },
     // limpiar() {

@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import firebase from "firebase";
+import { db } from "../../firebase";
+// import { storage } from "../../firebase";
 
 Vue.use(Vuex);
 
@@ -112,6 +114,11 @@ export default new Vuex.Store({
     },
     movil: "",
   },
+  getters: {
+    totalGatitos(state) {
+      return state.gatitosDB;
+    }
+  },
   mutations: {
     cargarGatitosDB(state, payload) {
       const carga = payload;
@@ -160,12 +167,12 @@ export default new Vuex.Store({
       });
     },
     deleteState(state, payload) {
-      const deleteGato = payload;
-      const gatos = state.gatitosDB;
-      if(!deleteGato) return;
-      const i = gatos.indexOf(deleteGato);
-      gatos.splice(i, 1);
-    }
+      const gatoId = payload.id;
+      if (!gatoId) return;
+      const finder = state.gatitosDB.find(el => el.id === gatoId);
+      const i = state.gatitosDB.indexOf(finder);
+      state.gatitosDB.splice(i, 1);
+    },
   },
   actions: {
     //Regiones
@@ -193,7 +200,7 @@ export default new Vuex.Store({
     },
     //Traer gatitos desde DB
     async getGatitosDB({ commit }) {
-      const db = firebase.firestore();
+      // const db = firebase.firestore();
       try {
         const req = await db.collection("gatitosDB").get();
         if (req) {
@@ -210,7 +217,7 @@ export default new Vuex.Store({
     },
     //Registrar usuario
     async nuevoUsuario({ commit }, payload) {
-      const db = firebase.firestore();
+      // const db = firebase.firestore();
       if (!payload) return;
       const nombre = payload.nombre;
       const celular = payload.celular;
@@ -236,7 +243,7 @@ export default new Vuex.Store({
     },
     //Crear Gatito
     async agregarGato({ commit }, payload) {
-      const db = firebase.firestore();
+      // const db = firebase.firestore();
       const nuevoGatito = await payload;
       if (!payload) return;
       try {
@@ -254,7 +261,7 @@ export default new Vuex.Store({
     },
     //update
     async updateDB({ commit }, payload) {
-      const db = firebase.firestore();
+      // const db = firebase.firestore();
       const obj = payload;
       if (!obj) return;
       const id = obj.id;
@@ -271,17 +278,17 @@ export default new Vuex.Store({
       }
     },
     //Delete
-    async deleteDB({commit}, payload) {
-      const db = firebase.firestore();
+    async deleteDB({ commit }, payload) {
+      // const db = firebase.firestore();
       const deleteGato = payload;
-      if(!deleteGato) return;
-      const id = deleteGato.id;
+      if (!deleteGato) return;
+      // const id = deleteGato.id;
       commit("deleteState", deleteGato);
       try {
-        await db.collection("gatitosDB").doc(id).delete()
+        // await db.collection("gatitosDB").doc(id).delete();
       } catch (error) {
         console.log(error);
       }
-    }
+    },
   },
 });

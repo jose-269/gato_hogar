@@ -82,6 +82,7 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 export default {
+  name: "misPublicaciones",
   data() {
     return {
       numero: "",
@@ -104,12 +105,14 @@ export default {
       }
     },
     eliminar(obj) {
+      // console.log(obj);
       this.deleteDB(obj);
     },
   },
   computed: {
-    ...mapState(["mostrarTabla"]),
+    ...mapState(["mostrarTabla", "gatitosDB"]),
   },
+  
 };
 </script>
 

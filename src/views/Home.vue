@@ -23,21 +23,22 @@
         </v-row>
       </v-container>
     </div>
-    <Anuncios :gatos="gatitos" :lugar="regiones" :gatosDB="gatitosDB" />
+    <Anuncios :lugar="regiones" :gatosDB="gatitosDB" />
   </div>
 </template>
 
 <script>
 // import axios from "axios";
 import Anuncios from "@/components/Anuncios.vue";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "Home",
   components: {
     Anuncios,
   },
   computed: {
-    ...mapState(["gatitos", "regiones", "gatitosDB"]),
+    ...mapState(["regiones", "gatitosDB"]),
+    ...mapGetters(["totalGatitos"])
   },
 };
 </script>
