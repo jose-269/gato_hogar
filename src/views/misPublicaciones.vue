@@ -86,6 +86,11 @@ export default {
   data() {
     return {
       numero: "",
+      form:{
+        nombre: "",
+        cantidad: "",
+        mensaje:""
+      }
     };
   },
   methods: {

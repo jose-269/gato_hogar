@@ -261,15 +261,15 @@ export default new Vuex.Store({
     async updateDB({ commit }, payload) {
       const obj = payload;
       if (!obj) return;
-      const id = obj.id;
+      // const id = obj.id;
       commit("updateState", obj);
       try {
-        const req = await db.collection("gatitosDB").doc(id).update({
-          nombre: obj.nombre,
-          cantidad: obj.cantidad,
-          mensaje: obj.mensaje,
-        });
-        if (!req) return;
+        // const req = await db.collection("gatitosDB").doc(id).update({
+        //   nombre: obj.nombre,
+        //   cantidad: obj.cantidad,
+        //   mensaje: obj.mensaje,
+        // });
+        // if (!req) return;
       } catch (error) {
         console.log(error);
       }
