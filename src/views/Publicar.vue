@@ -40,8 +40,10 @@
                 outlined
               ></v-select>
               <v-file-input
+              @change="onFileSelected($event)"
                 accept="image/*"
                 label="File input"
+                type="file"
                 outlined
                 dense
                 required
@@ -65,6 +67,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import firebase from "firebase"
+// import { storage } from "../../firebase";
 export default {
   name: "Publicar",
   data() {
@@ -75,10 +79,14 @@ export default {
         telefono: "",
         region: "",
         mensaje: "",
+        selectedFile: ""
       },
     };
   },
   methods: {
+    onFileSelected(event) {
+      this.form.selectedFile = event.target.files[0];
+    },
     ...mapActions(["agregarGato"]),
     publicar(obj) {
       const regexTel = /^\x2b569[0-9]{8}$/i;
@@ -95,7 +103,7 @@ export default {
         !this.form.cantidad &&
         !this.form.telefono &&
         !this.form.region &&
-        !this.form.mensaje
+        !this.form.mensaje 
       )
         return;
       else {
@@ -105,8 +113,11 @@ export default {
           telefono: obj.telefono.replace("+", ""),
           region: obj.region,
           mensaje: obj.mensaje,
+          // imagen: obj.onFileSelected
         };
         this.agregarGato(nuevoGato);
+        const storageRef = firebase.storage().ref(`/imagenes/${this.form.selectedFile.name}`);
+        storageRef.put(this.selectedFile)
         this.$router.push("/");
         this.limpiar();
       }

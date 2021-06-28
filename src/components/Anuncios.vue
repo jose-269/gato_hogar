@@ -8,7 +8,7 @@
           md="4"
           lg="3"
           xl="3"
-          v-for="(gatito,i) in gatosDB"
+          v-for="(gatito, i) in gatosDB"
           :key="i"
         >
           <v-card height="100%">
@@ -54,15 +54,14 @@
               </v-card-text>
               <v-card-actions>
                 <div class="div">
-                  <v-btn class="btn" 
-                  v-if="getLocalStorage"
-                  
-                  @click="contacto(gatito.telefono)"
-                  color="cyan darken-3 mx-auto"
-                  >Te gustaría adoptarme?</v-btn
-                >
+                  <v-btn
+                    class="btn"
+                    v-if="getLocalStorage"
+                    @click="contacto(gatito.telefono)"
+                    color="cyan darken-3 mx-auto"
+                    >Te gustaría adoptarme?</v-btn
+                  >
                 </div>
-                
               </v-card-actions>
             </div>
           </v-card>
@@ -73,13 +72,12 @@
 </template>
 
 <script>
-
 export default {
   name: "Anuncios",
   data() {
     return {
-      login: ""
-    }
+      login: "",
+    };
   },
   props: {
     gatos: {
@@ -90,19 +88,23 @@ export default {
     },
     gatosDB: {
       type: Array,
-    }
+    },
   },
   methods: {
     contacto(telefono) {
-      this.$router.push("google.com")
-      console.log(telefono);
-    }
+      const respuesta = confirm(
+        "¿Quieres ponerte en contacto con el dueño del gato?"
+      );
+      if (respuesta) {
+        window.location = `https://api.whatsapp.com/send?phone=${telefono}`;
+      }
+    },
   },
   computed: {
     getLocalStorage() {
       const logVar = localStorage.getItem("login");
-      return logVar
-    }
+      return logVar;
+    },
   },
 };
 </script>
@@ -116,15 +118,15 @@ export default {
   position: absolute;
   bottom: 3%;
 }
-@media (min-width: 320px)  {
-.btn {
-  left: 25px;
-}
+@media (min-width: 320px) {
+  .btn {
+    left: 25px;
+  }
 }
 @media (min-width: 360px) {
-.btn {
-  left: 50px;
-}
+  .btn {
+    left: 50px;
+  }
 }
 @media (min-width: 375px) {
   .btn {
@@ -132,9 +134,9 @@ export default {
   }
 }
 @media (min-width: 411px) {
-.btn {
-  left: 75px;
-}
+  .btn {
+    left: 75px;
+  }
 }
 @media (min-width: 480px) {
   .btn {
@@ -142,12 +144,12 @@ export default {
   }
 }
 @media (min-width: 540px) {
-  .btn{
+  .btn {
     left: 135px;
   }
 }
 @media (min-width: 540px) {
-  .btn{
+  .btn {
     left: 135px;
   }
 }
