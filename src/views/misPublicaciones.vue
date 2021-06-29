@@ -65,10 +65,10 @@
               <v-btn
                 @click="modificar(mostrarTabla)"
                 color="success"
-                class="mx-5"
+                class="mx-5 mb-2"
                 >Modificar</v-btn
               >
-              <v-btn @click="eliminar(mostrarTabla)" color="error"
+              <v-btn @click="eliminar(mostrarTabla)" color="error" class="mb-2"
                 >Eliminar publicación</v-btn
               >
             </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="grey darken-4 py-6">
+  <div class="grey darken-4 py-6 ">
     <v-container>
       <v-row>
         <v-col cols="12 ">
@@ -30,4 +30,9 @@ export default {};
 .logo {
   width: 3.5rem;
 }
+/* .footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+} */
 </style>

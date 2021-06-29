@@ -56,7 +56,7 @@
                 <div class="div">
                   <v-btn
                     class="btn"
-                    v-if="getLocalStorage"
+                    v-if="getLocalStorage === 'logueado'"
                     @click="contacto(gatito.telefono)"
                     color="cyan darken-3 mx-auto"
                     >Te gustaría adoptarme?</v-btn

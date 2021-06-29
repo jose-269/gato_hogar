@@ -3,7 +3,6 @@
     <v-container class="pt-16">
       <v-row style="height: 100vh">
         <v-col class="my-auto">
-          <!-- <div class="bg-login "> -->
           <v-alert class="my-auto">
             <label>E-mail</label>
             <v-text-field
@@ -39,35 +38,40 @@
 
 <script>
 import firebase from "firebase";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
-  
   computed: {
-    ...mapState(["registro"])
+    ...mapState(["registro"]),
   },
   methods: {
     async login() {
-      if (!this.registro && !this.registro.email && !this.registro.contraseña) return;
-      
+      if (!this.registro && !this.registro.email && !this.registro.contraseña)
+        return;
+
       try {
-        const db = firebase.firestore()
+        const db = firebase.firestore();
         const reqDBUser = await db.collection("usuarios").get();
         //  reqDBUser.docs.forEach(el => {
         //    console.log(el.data().email);
-           
+
         //  })
-         const finder = reqDBUser.docs.find(el => this.registro.email === el.data().email);
-         console.log(finder.data().email);
+        const finder = reqDBUser.docs.find(
+          (el) => this.registro.email === el.data().email
+        );
+        console.log(finder.data().email);
         // const usuario = reqDBUser.find(el => el.email === this.registro.email);
         // console.log(reqDBUser);
         // console.log(usuario);
         const req = await firebase
           .auth()
-          .signInWithEmailAndPassword(this.registro.email, this.registro.contraseña);
+          .signInWithEmailAndPassword(
+            this.registro.email,
+            this.registro.contraseña
+          );
         console.log(req);
 
         if (req && req !== null) {
-          localStorage.setItem("login","logueado");
+          localStorage.setItem("login", "logueado");
           this.$router.push("/");
         }
       } catch (error) {
