@@ -38,12 +38,14 @@
 
 <script>
 import firebase from "firebase";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
+  name: "Login",
   computed: {
     ...mapState(["registro"]),
   },
   methods: {
+    ...mapMutations(["setLogin"]),
     async login() {
       if (!this.registro && !this.registro.email && !this.registro.contraseña)
         return;
@@ -51,27 +53,16 @@ export default {
       try {
         const db = firebase.firestore();
         const reqDBUser = await db.collection("usuarios").get();
-        //  reqDBUser.docs.forEach(el => {
-        //    console.log(el.data().email);
-
-        //  })
-        const finder = reqDBUser.docs.find(
-          (el) => this.registro.email === el.data().email
-        );
-        console.log(finder.data().email);
-        // const usuario = reqDBUser.find(el => el.email === this.registro.email);
-        // console.log(reqDBUser);
-        // console.log(usuario);
+        reqDBUser.docs.find((el) => this.registro.email === el.data().email);
         const req = await firebase
           .auth()
           .signInWithEmailAndPassword(
             this.registro.email,
             this.registro.contraseña
           );
-        console.log(req);
-
         if (req && req !== null) {
           localStorage.setItem("login", "logueado");
+          this.setLogin(true);
           this.$router.push("/");
         }
       } catch (error) {

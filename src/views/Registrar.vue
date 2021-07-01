@@ -15,7 +15,7 @@
             <label>Número de celular</label>
             <v-text-field
               v-model="regUsuario.celular"
-              label="56 9 ********"
+              label="+56 9 ********"
               outlined
               dense
               required

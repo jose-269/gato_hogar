@@ -56,7 +56,7 @@
                 <div class="div">
                   <v-btn
                     class="btn"
-                    v-if="getLocalStorage === 'logueado'"
+                    v-if="logueado"
                     @click="contacto(gatito.telefono)"
                     color="cyan darken-3 mx-auto"
                     >Te gustaría adoptarme?</v-btn
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Anuncios",
   data() {
@@ -101,10 +102,11 @@ export default {
     },
   },
   computed: {
-    getLocalStorage() {
-      const logVar = localStorage.getItem("login");
-      return logVar;
-    },
+    ...mapState(["logueado"])
+    // getLocalStorage() {
+    //   const logVar = localStorage.getItem("login");
+    //   return logVar;
+    // },
   },
 };
 </script>
@@ -161,6 +163,11 @@ export default {
 @media (min-width: 768px) {
   .btn {
     left: 60px;
+  }
+}
+@media (min-width: 960px) {
+  .btn {
+    left: 18px;
   }
 }
 @media (min-width: 992px) {

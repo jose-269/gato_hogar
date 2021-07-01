@@ -16,16 +16,14 @@ export default {
     Nav,
     Footer,
   },
-  data: () => ({
-    //
-  }),
   methods: {
-    ...mapActions(["getData","getGatitosDB"]),
+    ...mapActions(["getData","getGatitosDB", "getLog"]),
   },
   
   created () {
     this.getData();
     this.getGatitosDB();
+    this.getLog()
   },
 };
 </script>

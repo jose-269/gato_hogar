@@ -10,13 +10,15 @@
               </v-card-title>
             </v-app-bar>
             <div class="mt-5 mx-16">
+              <label>Nombre de tu gatito</label>
               <v-text-field
                 v-model="form.nombre"
-                label="Nombre"
+                label="Nombre de tu gatito"
                 outlined
                 dense
                 required
               ></v-text-field>
+              <label>Cantidad de gatitos</label>
               <v-text-field
                 v-model="form.cantidad"
                 type="number"
@@ -25,9 +27,10 @@
                 dense
                 required
               ></v-text-field>
+              <label>Teléfono</label>
               <v-text-field
                 v-model="form.telefono"
-                label="Teléfono"
+                label="+56 9 ********"
                 outlined
                 dense
                 required
@@ -36,27 +39,27 @@
                 v-model="form.region"
                 :items="regiones"
                 item-text="region"
-                label="Región"
+                label="Selecciona la region donde vives"
                 outlined
               ></v-select>
-              <v-file-input
-              @change="onFileSelected($event)"
+              <v-btn raised color="primary" class="mb-5" @click="onPickFile">Elige tu imagen</v-btn>
+              <input 
+              @change="onFilePicked"
+                type="file" 
+                style="display: none" 
+                ref="fileInput" 
                 accept="image/*"
-                label="File input"
-                type="file"
-                outlined
-                dense
-                required
-              ></v-file-input>
+                >
+                <v-img v-if="form.imageUrl" :src="form.imageUrl" width="150" class="mb-5"></v-img>
               <v-textarea
                 v-model="form.mensaje"
-                label="mensaje"
+                label="Mensaje máximo 200 caracteres"
                 outlined
                 dense
               ></v-textarea>
             </div>
             <div class="text-center pb-5">
-              <v-btn @click="publicar(form)">Publicar</v-btn>
+              <v-btn color="success" @click="publicar(form)">Publicar</v-btn>
             </div>
           </v-card>
         </v-col>
@@ -67,8 +70,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import firebase from "firebase"
-// import { storage } from "../../firebase";
+// import firebase from "firebase"
+// // import { storage } from "../../firebase";
 export default {
   name: "Publicar",
   data() {
@@ -79,13 +82,28 @@ export default {
         telefono: "",
         region: "",
         mensaje: "",
-        selectedFile: ""
+        imageUrl: "",
+        image: ""
       },
     };
   },
   methods: {
-    onFileSelected(event) {
-      this.form.selectedFile = event.target.files[0];
+    onPickFile() {
+      this.$refs.fileInput.click();
+    },
+    onFilePicked(event) {
+      const files = event.target.files;
+      let filename = files[0].name;
+      if(filename.lastIndexOf(".") <=0) {
+        return alert("Ingresa una imagen valida")
+      }
+      
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", ()=> {
+        this.form.imageUrl = fileReader.result;
+      })
+      fileReader.readAsDataURL(files[0])
+      this.form.image = files[0]
     },
     ...mapActions(["agregarGato"]),
     publicar(obj) {
@@ -113,11 +131,9 @@ export default {
           telefono: obj.telefono.replace("+", ""),
           region: obj.region,
           mensaje: obj.mensaje,
-          // imagen: obj.onFileSelected
+          // imagen: obj.image
         };
         this.agregarGato(nuevoGato);
-        const storageRef = firebase.storage().ref(`/imagenes/${this.form.selectedFile.name}`);
-        storageRef.put(this.selectedFile)
         this.$router.push("/");
         this.limpiar();
       }

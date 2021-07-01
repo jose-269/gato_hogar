@@ -10,9 +10,10 @@
               </h3>
             </div>
             <div class="bg-ingresar px-16 py-5">
+              <label>Teléfono</label>
               <v-text-field
                 v-model="numero"
-                label="Numero de movil"
+                label="+56 9 ********"
                 outlined
                 dense
                 required
@@ -24,7 +25,7 @@
               </div>
             </div>
           </div>
-          <v-card class="my-5 mt-16">
+          <v-card v-if="editar" class="my-5 mt-16">
             <v-app-bar color="warning">
               <v-card-title class="mx-auto">
                 <h4 class="white--text">Modifica tu publicación</h4>
@@ -32,17 +33,19 @@
             </v-app-bar>
 
             <div class="mt-5 mx-16">
+              <label>Nombre de tu gatito</label>
               <v-text-field
                 v-model="mostrarTabla.nombre"
-                label="Nombre"
+                label="Nombre de tu gatito"
                 outlined
                 dense
                 required
               ></v-text-field>
+              <label>Cantidad de gatitos</label>
               <v-text-field
                 v-model="mostrarTabla.cantidad"
                 type="number"
-                label="cantidad de gatos"
+                label="Cantidad de gatitos"
                 outlined
                 dense
                 required
@@ -56,7 +59,7 @@
               ></v-file-input>
               <v-textarea
                 v-model="mostrarTabla.mensaje"
-                label="mensaje"
+                label="Mensaje máximo 200 caracteres"
                 outlined
                 dense
               ></v-textarea>
@@ -95,8 +98,10 @@ export default {
   },
   methods: {
     ...mapActions(["updateDB", "deleteDB"]),
-    ...mapMutations(["setMovil", "getTabla"]),
+    ...mapMutations(["setMovil", "getTabla", "setEditar"]),
+    
     modificar(obj) {
+      this.$router.push("/");
       this.updateDB(obj);
     },
     traerEdicion(celu) {
@@ -105,17 +110,19 @@ export default {
       else if (!regexTel.test(celu)) alert("Ingrese un número válido");
       else {
         const telefono = celu.replace("+", "");
+        this.setEditar()
         this.getTabla(telefono);
         this.setMovil(telefono);
       }
     },
     eliminar(obj) {
-      // console.log(obj);
+      console.log(obj.id);
+      this.$router.push("/");
       this.deleteDB(obj);
     },
   },
   computed: {
-    ...mapState(["mostrarTabla"]),
+    ...mapState(["mostrarTabla", "editar"]),
   },
   
 };

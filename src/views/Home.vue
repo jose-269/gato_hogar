@@ -3,9 +3,9 @@
     <div class="bg pt-16">
       <v-container>
         <v-row>
-          <v-col class="text-center my-auto" sm="6">
-            <h1 class="mb-7 white--text">Gathogar</h1>
-            <h3 class="mb-15 white--text">
+          <v-col class=" my-auto text-center" sm="6">
+            <h1 class="mb-7 white--text text-center main-Title">Gathogar</h1>
+            <h3 class="mb-15 white--text  text-sm-left  ">
               Presentamos un espacio
               donde puedes publicar tus gatitos para ser adoptados así tambien como
               para adoptar.
@@ -28,7 +28,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 import Anuncios from "@/components/Anuncios.vue";
 import { mapState, mapGetters } from "vuex";
 export default {
@@ -45,5 +44,14 @@ export default {
 <style scoped>
 .bg {
   background-color: #212121;
+}
+.main-Title {
+  font-size: 3.5rem;
+  font-weight: normal;
+}
+@media (min-width: 768px){
+  .main-Title {
+    font-size: 5.5rem;
+  }
 }
 </style>
