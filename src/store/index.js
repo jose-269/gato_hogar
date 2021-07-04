@@ -24,7 +24,6 @@ export default new Vuex.Store({
       email: "",
       contraseña: "",
     },
-    editar: false,
     mostrarTabla: {
       nombre: "",
       cantidad: "",

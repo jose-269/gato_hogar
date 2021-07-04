@@ -25,7 +25,7 @@
               </div>
             </div>
           </div>
-          <v-card v-if="editar" class="my-5 mt-16">
+          <v-card class="my-5 mt-16">
             <v-app-bar color="warning">
               <v-card-title class="mx-auto">
                 <h4 class="white--text">Modifica tu publicación</h4>
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     ...mapActions(["updateDB", "deleteDB"]),
-    ...mapMutations(["setMovil", "getTabla", "setEditar"]),
+    ...mapMutations(["setMovil", "getTabla"]),
     
     modificar(obj) {
       this.$router.push("/");
@@ -110,7 +110,6 @@ export default {
       else if (!regexTel.test(celu)) alert("Ingrese un número válido");
       else {
         const telefono = celu.replace("+", "");
-        this.setEditar()
         this.getTabla(telefono);
         this.setMovil(telefono);
       }
@@ -122,7 +121,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["mostrarTabla", "editar"]),
+    ...mapState(["mostrarTabla"]),
   },
   
 };
