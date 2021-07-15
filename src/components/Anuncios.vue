@@ -16,6 +16,7 @@
               class="
                 subtitle-1
                 font-weight-bold
+                card-title
                 grey
                 darken-4
                 white--text
@@ -41,15 +42,15 @@
               <v-divider></v-divider>
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title
+                  <v-list-item-title class="card-text"
                     >Cantidad: {{ gatito.cantidad }}</v-list-item-title
                   >
-                  <v-list-item-title
+                  <v-list-item-title class="card-text"
                     >Region: {{ gatito.region }}</v-list-item-title
                   >
                 </v-list-item-content>
               </v-list-item>
-              <v-card-text class="pt-0">
+              <v-card-text class="pt-0 card-text">
                 {{ gatito.mensaje }}
               </v-card-text>
               <v-card-actions>
@@ -102,20 +103,19 @@ export default {
     },
   },
   computed: {
-    ...mapState(["logueado"])
-    // getLocalStorage() {
-    //   const logVar = localStorage.getItem("login");
-    //   return logVar;
-    // },
+    ...mapState(["logueado"]),
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/scss/main.scss";
 .bg-anuncios {
   background-color: #eeeeee;
 }
-
+.card-text {
+  font-family: $main-font;
+}
 .btn {
   position: absolute;
   bottom: 3%;

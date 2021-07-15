@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="myFont">
     <Nav />
     <router-view />
     <Footer />
@@ -27,3 +27,9 @@ export default {
   },
 };
 </script>
+
+// <style lang="scss" scoped>
+// .myFont {
+//   font-family: 'Playfair Display', serif;
+// }
+// </style>

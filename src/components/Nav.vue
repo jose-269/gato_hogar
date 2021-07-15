@@ -1,56 +1,62 @@
-
 <template>
-      <v-toolbar elevation="2"  class="nav px-16 grey lighten-3">
-        <v-btn icon to="/">
-          <v-img class="logo" src="@/assets/gathogar_logo.png"></v-img>
+  <v-toolbar elevation="2" class="nav px-16 grey lighten-3">
+    <v-btn icon to="/">
+      <v-img class="logo" src="@/assets/gathogar_logo.png"></v-img>
+    </v-btn>
+    <v-spacer></v-spacer>
+    <div class="hidden-sm-and-down">
+      <v-btn text to="/misPublicaciones" class="px-0">Mis publicaciones</v-btn>
+      <v-btn text to="/publicar">Publicar</v-btn>
+      <v-btn
+        v-if="!logueado"
+        to="/login"
+        elevation="2"
+        outlined
+        color="success"
+        class=""
+        >Ingresar</v-btn
+      >
+      <v-btn
+        v-if="logueado"
+        elevation="2"
+        outlined
+        color="warning"
+        class="ml-5"
+        @click="logOut"
+        >salir</v-btn
+      >
+    </div>
+    <v-menu nudge-left="200">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn icon class="hidden-md-and-up" v-bind="attrs" v-on="on"
+          ><v-icon class="">mdi-dots-vertical</v-icon>
         </v-btn>
-        <v-toolbar-title class="font-italic title">Gathogar</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <div class="hidden-sm-and-down">
-          <v-btn text to="/misPublicaciones" class="px-0" >Mis publicaciones</v-btn>
-          <v-btn text to="/publicar">Publicar</v-btn>
-          <v-btn v-if="!logueado" to="/login" elevation="2" outlined color="success" class=""
+      </template>
+      <v-list class="mt-8 text-left px-5" min-width="100" dark>
+        <v-list-item-title
+          ><v-btn to="/misPublicaciones" class="mb-3" color="succes" outlined
+            >Mis publicaciones</v-btn
+          ></v-list-item-title
+        >
+        <v-list-item-title
+          ><v-btn to="/publicar" color="succes" outlined
+            >Publicar</v-btn
+          ></v-list-item-title
+        >
+        <v-list-item-title class="my-3"
+          ><v-btn v-if="!logueado" to="/login" color="succes" outlined
             >Ingresar</v-btn
-          >
-          <v-btn v-if="logueado" elevation="2" outlined color="warning" class="ml-5" @click="logOut">salir</v-btn>
-        </div>
-          <v-menu nudge-left="200">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon class="hidden-md-and-up" v-bind="attrs" v-on="on"
-                ><v-icon class="">mdi-dots-vertical</v-icon>
-              </v-btn>
-            </template>
-            <v-list class="mt-8 text-left px-5" min-width="100" dark>
-              <v-list-item-title
-                ><v-btn
-                  to="/misPublicaciones"
-                  class="mb-3"
-                  color="succes"
-                  outlined
-                  >Mis publicaciones</v-btn
-                ></v-list-item-title
-              >
-              <v-list-item-title
-                ><v-btn to="/publicar" color="succes" outlined
-                  >Publicar</v-btn
-                ></v-list-item-title
-              >
-              <v-list-item-title class="my-3"
-                ><v-btn v-if="!logueado" to="/login" color="succes" outlined
-                  >Ingresar</v-btn
-                ></v-list-item-title
-              >
-              <v-list-item-title
-                ><v-btn v-if="logueado" color="succes" outlined @click="logOut"
-                  >Salir</v-btn
-                ></v-list-item-title
-              >
-            </v-list>
-          </v-menu>
-      </v-toolbar>
- 
+          ></v-list-item-title
+        >
+        <v-list-item-title
+          ><v-btn v-if="logueado" color="succes" outlined @click="logOut"
+            >Salir</v-btn
+          ></v-list-item-title
+        >
+      </v-list>
+    </v-menu>
+  </v-toolbar>
 </template>
-
 
 <script>
 import { mapState, mapActions } from "vuex";
@@ -58,30 +64,38 @@ import { mapState, mapActions } from "vuex";
 export default {
   name: "Nav",
   methods: {
-    ...mapActions(["logOut"])
+    ...mapActions(["logOut"]),
   },
   computed: {
     navLocalStorage() {
       const logVar = localStorage.getItem("login");
       return logVar;
     },
-    ...mapState(["logueado"])
+    ...mapState(["logueado"]),
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap");
+@import "@/scss/main.scss";
+
 .nav {
   width: 100%;
   z-index: 1;
   position: fixed;
+  font-family: $main-font;
 }
 
 .logo {
   width: 3.5rem;
 }
 .title {
+  font-family: "Playfair Display", serif !important;
+}
+.title {
   visibility: hidden;
+  font-family: "Playfair Display", serif !important;
 }
 @media (min-width: 480px) {
   .title {

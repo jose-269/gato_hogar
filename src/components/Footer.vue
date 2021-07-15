@@ -1,5 +1,5 @@
 <template>
-  <div class="grey darken-4 py-6 ">
+  <div class="grey darken-4 py-6">
     <v-container>
       <v-row>
         <v-col cols="12 ">
@@ -13,7 +13,7 @@
       </v-row>
       <v-row>
         <v-col cols="12">
-          <p class="text-center white--text">
+          <p class="text-center white--text footer-text">
             Una página para gatos no para humanos ®
           </p>
         </v-col>
@@ -26,9 +26,13 @@
 export default {};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/scss/main.scss";
 .logo {
   width: 3.5rem;
+}
+.footer-text {
+  font-family: $main-font;
 }
 /* .footer {
   position: absolute;
